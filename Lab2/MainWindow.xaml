@@ -6,14 +6,10 @@
         xmlns:local="clr-namespace:Lab2"
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="900">
-    <DockPanel>
-        <Label Content="Label" DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="5"/>
-        <!--Додаємо TextBox зліва та справа-->
-
-        <TextBox Text="TextBox" DockPanel.Dock="Left" Margin="10" Height="300" Width="350"/>
-        <TextBox Text="TextBox" DockPanel.Dock="Right" Margin="10" Height="300" Width="350"/>
-        <Button Content="Button" DockPanel.Dock="Bottom" Width="75" Height="23" 
-                HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20"/>
-    </DockPanel>
+    <Canvas Background="Aqua" >
+        <Label Content="Label" Canvas.Left="20" Canvas.Top="20" Height="25" Width="44" />
+        <TextBox Text="Text" Width="30" Height="20" Canvas.Left="40" Canvas.Top="40"/>
+        <Button Content="Button" Width="45" Height="20" Canvas.Left="60" Canvas.Top="60"/>
+    </Canvas>
 
 </Window>
