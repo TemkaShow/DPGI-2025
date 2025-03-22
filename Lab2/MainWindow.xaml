@@ -6,15 +6,31 @@
         xmlns:local="clr-namespace:Lab2"
         mc:Ignorable="d"
         Title="MainWindow" Height="550" Width="900">
-    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="300">
-        <Label Content="Label" HorizontalAlignment="Center"/>
-        <!-- Заміна контейнера та розміщення TextBox -->
-
-        <TextBox Text="TextBox" Width="300"/>
-        <TextBox Text="TextBox" Width="300"/>
-        <TextBox Text="TextBox" Width="300"/>
-        <TextBox Text="TextBox" Width="300"/>
-        <Button Content="Button" Width="150" HorizontalAlignment="Center" Margin="10"/>
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <WrapPanel Width="700" Orientation="Horizontal">
+            <!-- Label для першого рядка -->
+            <Label Content="Label" VerticalAlignment="Center"/>
+            <TextBox Width="80" Height="26"/>
+            <TextBox Width="80" Height="26"/>
+            <TextBox Width="80" Height="26"/>
+            <TextBox Width="80" Height="26"/>
+            <TextBox Width="80" Height="26"/>
+            <TextBox Width="80" Height="26"/>
+            <TextBox Width="80" Height="26"/>
+            <TextBox Width="80" Height="26"/>
+            
+            <!-- Label для другого рядка -->
+            <Label Content="Label" VerticalAlignment="Center"/>
+            <TextBox Width="80" Height="26"/>
+            <TextBox Width="80" Height="26"/>
+            <TextBox Width="80" Height="26"/>
+            <TextBox Width="80" Height="26"/>
+            <TextBox Width="80" Height="26"/>
+            <TextBox Width="80" Height="26"/>
+            <TextBox Width="80" Height="26"/>
+            <TextBox Width="80" Height="26"/>
+        </WrapPanel>
+        <Button Content="Button" Width="90" Height="26" Margin="0,30,0,0" HorizontalAlignment="Center" />
     </StackPanel>
 
 </Window>
