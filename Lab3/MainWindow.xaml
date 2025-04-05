@@ -5,8 +5,32 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Lab3"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow" Height="450" Width="800" Background="#f9f9f9" KeyDown="Window_KeyDown">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
+        <TextBlock Text="Конвертер системи числення" 
+                   FontSize="20" FontWeight="Bold" 
+                   Foreground="#333" HorizontalAlignment="Center" Margin="0,0,0,15"/>
+
+        <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0,0,0,10">
+            <TextBlock Text="Введіть число (арабське або римське):" FontSize="14" Margin="0,0,0,5"/>
+            <TextBox x:Name="InputTextBox" FontSize="14" Padding="8" BorderBrush="#ccc" BorderThickness="1"/>
+        </StackPanel>
+
+        <Button x:Name="ConvertButton" Content="Конвертувати" Grid.Row="2" Click="ConvertButton_Click" 
+                FontSize="14" Padding="8,5" Background="#007ACC" Foreground="White"
+                BorderThickness="0" HorizontalAlignment="Center" Width="150" Margin="0,0,0,10"/>
+
+        <Border Grid.Row="3" Background="#fff" BorderBrush="#ddd" BorderThickness="1" CornerRadius="5" Padding="15">
+            <TextBox x:Name="ResultTextBlock" FontSize="16" FontWeight="SemiBold" Foreground="#444"
+                     Background="Transparent" BorderThickness="0" IsReadOnly="True"
+                     TextWrapping="Wrap" AcceptsReturn="True" Cursor="IBeam"/>
+        </Border>
     </Grid>
 </Window>
