@@ -23,12 +23,11 @@ public partial class MainWindow : Window
     }
 
     // Обробка натискання кнопки
-    private void ConvertButton_Click(object sender, RoutedEventArgs e)
-    {
-        ConvertInput();
-    }
+    //private void ConvertButton_Click(object sender, RoutedEventArgs e)
+    //{
+    //    ConvertInput();
+    //}
 
-    // Обробка клавіші Enter
     private void Window_KeyDown(object sender, KeyEventArgs e)
     {
         if (e.Key == Key.Enter)
@@ -113,7 +112,6 @@ public partial class MainWindow : Window
             int currentValue = romanNumerals[c];
             total += currentValue;
 
-            // Віднімання в римських числах (наприклад IV = 5 - 1)
             if (currentValue > prevValue)
                 total -= 2 * prevValue;
 
