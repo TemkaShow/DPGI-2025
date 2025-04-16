@@ -5,8 +5,64 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Lab4"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Клієнти (Варіант 3)" Height="450" Width="600"
+        Loaded="Window_Loaded">
 
+    <!-- Головний контейнер з відступами -->
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Список клієнтів -->
+        <ListBox Grid.Row="0"
+                 Name="ClientListBox"
+                 Margin="0,0,0,10"
+                 ItemsSource="{Binding}"               
+                 DisplayMemberPath="Name"                
+                 IsSynchronizedWithCurrentItem="True" />
+
+        <!-- Панель для відображення/редагування деталей вибраного клієнта -->
+        <Grid Grid.Row="1" DataContext="{Binding ElementName=ClientListBox, Path=SelectedItem}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!-- Поле ID -->
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Id:" VerticalAlignment="Center" Margin="5"/>
+            <TextBox   Grid.Row="0" Grid.Column="1" Name="IdTextBox" Margin="5"
+                       Text="{Binding Path=Id, Mode=OneWay}"
+                       IsReadOnly="True"/>
+
+            <!-- Поле Name -->
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Name:" VerticalAlignment="Center" Margin="5"/>
+            <TextBox   Grid.Row="1" Grid.Column="1" Name="NameTextBox" Margin="5"
+                       Text="{Binding Path=Name}" />
+
+            <!-- Поле Phone -->
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Phone:" VerticalAlignment="Center" Margin="5"/>
+            <TextBox   Grid.Row="2" Grid.Column="1" Name="PhoneTextBox" Margin="5"
+                       Text="{Binding Path=Phone}" />
+
+            <!-- Поле Address -->
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Address:" VerticalAlignment="Center" Margin="5"/>
+            <TextBox   Grid.Row="3" Grid.Column="1" Name="AddressTextBox" Margin="5"
+                       Text="{Binding Path=Address}" />
+
+            <!-- Поле Order amount -->
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="Order amount:" VerticalAlignment="Center" Margin="5"/>
+            <TextBox   Grid.Row="4" Grid.Column="1" Name="OrderAmountTextBox" Margin="5"
+                       Text="{Binding Path=[Order amount], StringFormat=N2}" />
+
+        </Grid>
     </Grid>
 </Window>
