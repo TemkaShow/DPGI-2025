@@ -5,64 +5,112 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Lab4"
         mc:Ignorable="d"
-        Title="Клієнти (Варіант 3)" Height="450" Width="600"
+        Title="Клієнти" Height="500" Width="600"
         Loaded="Window_Loaded">
 
-    <!-- Головний контейнер з відступами -->
-    <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+    <!-- === Ресурси вікна зі Стилями === -->
+    <Window.Resources>
+        <!-- Стиль для міток -->
+        <Style x:Key="LabelStyle" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5,5,10,5"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
 
-        <!-- Список клієнтів -->
-        <ListBox Grid.Row="0"
-                 Name="ClientListBox"
-                 Margin="0,0,0,10"
-                 ItemsSource="{Binding}"               
-                 DisplayMemberPath="Name"                
-                 IsSynchronizedWithCurrentItem="True" />
+        <!-- Стиль для полів вводу -->
+        <Style x:Key="EntryTextBoxStyle" TargetType="TextBox">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,5,5,5"/>
+            <Setter Property="Padding" Value="3"/>
+            <Style.Triggers>
+                <Trigger Property="IsReadOnly" Value="True">
+                    <Setter Property="Background" Value="#FFEBEBEB"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
 
-        <!-- Панель для відображення/редагування деталей вибраного клієнта -->
-        <Grid Grid.Row="1" DataContext="{Binding ElementName=ClientListBox, Path=SelectedItem}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+        <Style x:Key="DetailsCardStyle" TargetType="Border">
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Margin" Value="5,0,5,5"/>
+            <Setter Property="BorderBrush" Value="#CCC"/>
+            <Setter Property="Background" Value="#FAFAFA"/>
+        </Style>
+    </Window.Resources>
+
+    <!-- Головний макет -->
+    <DockPanel>
+        <!-- Панель інструментів -->
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar Height="30">
+                <Button Name="CreateButton" Click="CreateButton_Click">Create</Button>
+                <Separator />
+                <Button Name="UpdateButton" Click="UpdateButton_Click">Update</Button>
+                <Separator />
+                <Button Name="DeleteButton" Click="DeleteButton_Click">Delete</Button>
+            </ToolBar>
+        </ToolBarTray>
+
+        <!-- Основний вміст -->
+        <Grid Margin="10">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <!-- Поле ID -->
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="Id:" VerticalAlignment="Center" Margin="5"/>
-            <TextBox   Grid.Row="0" Grid.Column="1" Name="IdTextBox" Margin="5"
-                       Text="{Binding Path=Id, Mode=OneWay}"
-                       IsReadOnly="True"/>
+            <!-- Список клієнтів -->
+            <ListBox Grid.Row="0"
+                     Name="ClientListBox"
+                     Margin="0,0,0,10"
+                     ItemsSource="{Binding}"
+                     DisplayMemberPath="Name"
+                     IsSynchronizedWithCurrentItem="True" />
 
-            <!-- Поле Name -->
-            <TextBlock Grid.Row="1" Grid.Column="0" Text="Name:" VerticalAlignment="Center" Margin="5"/>
-            <TextBox   Grid.Row="1" Grid.Column="1" Name="NameTextBox" Margin="5"
-                       Text="{Binding Path=Name}" />
+            <!-- Деталі клієнта -->
+            <Border Grid.Row="1"
+                    Style="{StaticResource DetailsCardStyle}"
+                    DataContext="{Binding ElementName=ClientListBox, Path=SelectedItem}">
 
-            <!-- Поле Phone -->
-            <TextBlock Grid.Row="2" Grid.Column="0" Text="Phone:" VerticalAlignment="Center" Margin="5"/>
-            <TextBox   Grid.Row="2" Grid.Column="1" Name="PhoneTextBox" Margin="5"
-                       Text="{Binding Path=Phone}" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" MinWidth="100"/>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
 
-            <!-- Поле Address -->
-            <TextBlock Grid.Row="3" Grid.Column="0" Text="Address:" VerticalAlignment="Center" Margin="5"/>
-            <TextBox   Grid.Row="3" Grid.Column="1" Name="AddressTextBox" Margin="5"
-                       Text="{Binding Path=Address}" />
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Id:" Style="{StaticResource LabelStyle}"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" Name="IdTextBox"
+                             Text="{Binding Path=Id, Mode=OneWay}"
+                             IsReadOnly="True" Style="{StaticResource EntryTextBoxStyle}"/>
 
-            <!-- Поле Order amount -->
-            <TextBlock Grid.Row="4" Grid.Column="0" Text="Order amount:" VerticalAlignment="Center" Margin="5"/>
-            <TextBox   Grid.Row="4" Grid.Column="1" Name="OrderAmountTextBox" Margin="5"
-                       Text="{Binding Path=[Order amount], StringFormat=N2}" />
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Name:" Style="{StaticResource LabelStyle}"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Name="NameTextBox"
+                             Text="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}"
+                             Style="{StaticResource EntryTextBoxStyle}" />
 
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Phone:" Style="{StaticResource LabelStyle}"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Name="PhoneTextBox"
+                             Text="{Binding Path=Phone, UpdateSourceTrigger=PropertyChanged}"
+                             Style="{StaticResource EntryTextBoxStyle}" />
+
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Address:" Style="{StaticResource LabelStyle}"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" Name="AddressTextBox"
+                             Text="{Binding Path=Address, UpdateSourceTrigger=PropertyChanged}"
+                             Style="{StaticResource EntryTextBoxStyle}" />
+
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Order amount:" Style="{StaticResource LabelStyle}"/>
+                    <TextBox Grid.Row="4" Grid.Column="1" Name="OrderAmountTextBox"
+                             Text="{Binding Path=[Order amount], StringFormat={}{0:F2}, ConverterCulture=en-US, UpdateSourceTrigger=PropertyChanged}"
+                             Style="{StaticResource EntryTextBoxStyle}" />
+                </Grid>
+            </Border>
         </Grid>
-    </Grid>
+    </DockPanel>
 </Window>
