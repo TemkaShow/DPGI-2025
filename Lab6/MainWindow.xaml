@@ -1,0 +1,77 @@
+﻿<Window x:Class="Lab6.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Lab6" mc:Ignorable="d"
+        Title="Конвертер чисел" MinWidth="500" MinHeight="550"
+        WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
+
+    <Viewbox Stretch="Uniform">
+        <Grid Width="800" Height="550" Margin="15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Конвертер -->
+            <StackPanel Grid.Row="0" Orientation="Vertical" Width="600">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Арабське число -->
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Арабське число (1-3999):" FontSize="16" Margin="0,0,0,5"/>
+                        <TextBox x:Name="ArabicTextBox" FontSize="16" Padding="8" 
+                                 TextChanged="ArabicTextBox_TextChanged"/>
+                    </StackPanel>
+
+                    <!-- Римське число -->
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Римське число (I-MMMCMXCIX):" FontSize="16" Margin="0,0,0,5"/>
+                        <TextBox x:Name="RomanTextBox" FontSize="16" Padding="8"
+                                 TextChanged="RomanTextBox_TextChanged"/>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Кнопки -->
+                <StackPanel Orientation="Horizontal" Margin="0,20,0,20" HorizontalAlignment="Center">
+                    <Button x:Name="SaveButton" Content="Зберегти результат"
+                            Padding="20,8" Margin="0,0,20,0" Click="SaveButton_Click"
+                            Background="#4CAF50" Foreground="White" BorderThickness="0"
+                            FontSize="16" MinWidth="150"/>
+
+                    <Button x:Name="ClearHistoryButton" Content="Очистити історію"
+                            Padding="20,8" Click="ClearHistoryButton_Click"
+                            Background="#F44336" Foreground="White" BorderThickness="0"
+                            FontSize="16" MinWidth="150"/>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- Історія -->
+            <StackPanel Grid.Row="2" Orientation="Vertical">
+                <TextBlock Text="Історія конвертацій:" FontSize="16" Margin="0,0,0,10" FontWeight="SemiBold"/>
+
+                <DataGrid x:Name="HistoryDataGrid" AutoGenerateColumns="False"
+                          HeadersVisibility="Column" IsReadOnly="True"
+                          VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+                          CanUserAddRows="False" CanUserResizeColumns="True"
+                          ColumnWidth="*" MinColumnWidth="120" Height="300">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="Auto" MinWidth="60"/>
+                        <DataGridTextColumn Header="Арабське" Binding="{Binding ArabicNumeral}" MinWidth="150"/>
+                        <DataGridTextColumn Header="Римське" Binding="{Binding RomanNumeral}" MinWidth="150"/>
+                        <DataGridTextColumn Header="Час" 
+                                           Binding="{Binding ConversionDate, StringFormat='dd.MM.yyyy HH:mm:ss'}" 
+                                           Width="*" MinWidth="180"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </Grid>
+    </Viewbox>
+</Window>
