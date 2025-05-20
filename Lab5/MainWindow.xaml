@@ -1,0 +1,160 @@
+﻿<Window x:Class="Lab5.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Lab5" mc:Ignorable="d"
+        Title="Довідник клієнтів" Height="600" Width="900" MinHeight="450" MinWidth="700"
+        Loaded="Window_Loaded" Closed="Window_Closed_EventHandler">
+
+    <Grid>
+        <Viewbox Stretch="Uniform">
+            <Grid Width="850" Height="550">
+                <TabControl Name="MainTabControl" Margin="5">
+
+                    <!-- Вкладка 1: Клієнти -->
+                    <TabItem Header="Клієнти">
+                        <Grid>
+                            <DataGrid Name="ClientsDataGrid"
+                                      AutoGenerateColumns="False"
+                                      Margin="5"
+                                      IsReadOnly="True">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="ID Клієнта" Binding="{Binding ClientID}" Width="Auto"/>
+                                    <DataGridTextColumn Header="Ім'я Клієнта" Binding="{Binding ClientName}" Width="*"/>
+                                    <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}" Width="Auto"/>
+                                    <DataGridTextColumn Header="Компанія" Binding="{Binding CompanyName}" Width="*"/>
+                                    <DataGridTextColumn Header="Надходження" Binding="{Binding Income}" Width="Auto"/>
+                                    <DataGridTextColumn Header="Витрати" Binding="{Binding Expenses}" Width="Auto"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </TabItem>
+
+                    <!-- Вкладка 2: Компанії -->
+                    <TabItem Header="Компанії">
+                        <Grid>
+                            <DataGrid Name="CompaniesDataGrid"
+                                      AutoGenerateColumns="False"
+                                      Margin="5"
+                                      IsReadOnly="True">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Код Компанії" Binding="{Binding CompanyCode}" Width="Auto"/>
+                                    <DataGridTextColumn Header="Назва Компанії" Binding="{Binding CompanyName}" Width="*"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </TabItem>
+
+                    <!-- Вкладка 3: Клієнти по компаніях -->
+                    <TabItem Header="Клієнти по компаніях">
+                        <Grid>
+                            <DataGrid Name="ClientsCountByCompanyDataGrid"
+                                      AutoGenerateColumns="False"
+                                      Margin="5"
+                                      IsReadOnly="True">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Назва Компанії" Binding="{Binding CompanyName}" Width="*"/>
+                                    <DataGridTextColumn Header="Кількість клієнтів" Binding="{Binding NumberOfClients}" Width="Auto"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </TabItem>
+
+                    <!-- Вкладка 4: Пошук клієнта -->
+                    <TabItem Header="Пошук клієнта">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Панель пошуку -->
+                            <Grid Margin="5" Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="Ім'я клієнта:"
+                                           VerticalAlignment="Center"
+                                           Margin="0,0,5,0"
+                                           Grid.Column="0"/>
+
+                                <TextBox Name="ClientNameSearchTextBox"
+                                         Margin="5,0,5,0"
+                                         VerticalAlignment="Center"
+                                         Grid.Column="1"
+                                         TextChanged="ClientNameSearchTextBox_TextChanged"/>
+                            </Grid>
+
+                            <!-- Таблиця результатів -->
+                            <DataGrid Name="FilteredClientsDataGrid"
+                                      AutoGenerateColumns="False"
+                                      Margin="5"
+                                      Grid.Row="1"
+                                      IsReadOnly="True">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="ID Клієнта" Binding="{Binding ClientID}" Width="Auto"/>
+                                    <DataGridTextColumn Header="Ім'я Клієнта" Binding="{Binding ClientName}" Width="*"/>
+                                    <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}" Width="Auto"/>
+                                    <DataGridTextColumn Header="Компанія" Binding="{Binding CompanyName}" Width="*"/>
+                                    <DataGridTextColumn Header="Надходження" Binding="{Binding Income}" Width="Auto"/>
+                                    <DataGridTextColumn Header="Витрати" Binding="{Binding Expenses}" Width="Auto"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </TabItem>
+
+                    <!-- Вкладка 5: Фільтр за компанією -->
+                    <TabItem Header="Фільтр за компанією">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Комбобокс фільтрації -->
+                            <Grid Margin="5" Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="Оберіть компанію:"
+                                           VerticalAlignment="Center"
+                                           Margin="0,0,5,0"
+                                           Grid.Column="0"/>
+
+                                <ComboBox Name="CompanyFilterComboBox"
+                                          Margin="5,0,5,0"
+                                          VerticalAlignment="Center"
+                                          Grid.Column="1"
+                                          SelectionChanged="CompanyFilterComboBox_SelectionChanged"/>
+                            </Grid>
+
+                            <!-- Таблиця результатів -->
+                            <DataGrid Name="ClientsByCompanyFilterDataGrid"
+                                      AutoGenerateColumns="False"
+                                      Margin="5"
+                                      Grid.Row="1"
+                                      IsReadOnly="True">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="ID Клієнта" Binding="{Binding ClientID}" Width="Auto"/>
+                                    <DataGridTextColumn Header="Ім'я Клієнта" Binding="{Binding ClientName}" Width="*"/>
+                                    <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}" Width="Auto"/>
+                                    <DataGridTextColumn Header="Компанія" Binding="{Binding CompanyName}" Width="*"/>
+                                    <DataGridTextColumn Header="Надходження" Binding="{Binding Income}" Width="Auto"/>
+                                    <DataGridTextColumn Header="Витрати" Binding="{Binding Expenses}" Width="Auto"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </TabItem>
+
+                </TabControl>
+            </Grid>
+        </Viewbox>
+    </Grid>
+</Window>
