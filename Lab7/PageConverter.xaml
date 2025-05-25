@@ -1,0 +1,92 @@
+﻿<Page x:Class="Lab7.PageConverter"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Lab7"
+      xmlns:cmd="clr-namespace:Lab7.Commands" 
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="850"
+      Title="Конвертер" Loaded="Page_Loaded">
+
+    <Page.CommandBindings>
+        <CommandBinding Command="cmd:DataCommands.Undo" Executed="UndoCommand_Executed" CanExecute="UndoCommand_CanExecute"/>
+        <CommandBinding Command="cmd:DataCommands.New" Executed="NewCommand_Executed" CanExecute="NewCommand_CanExecute"/>
+        <CommandBinding Command="cmd:DataCommands.Edit" CanExecute="EditCommand_CanExecute_NotApplicable"/>
+        <CommandBinding Command="cmd:DataCommands.Save" Executed="SaveCommand_Executed" CanExecute="SaveCommand_CanExecute"/>
+    </Page.CommandBindings>
+
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top" Orientation="Vertical">
+            <Menu Margin="3" FontSize="14">
+                <MenuItem Header="Дія">
+                    <MenuItem Header="Скасувати" Command="cmd:DataCommands.Undo">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/undo.png" Width="16" Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator/>
+                    <MenuItem Header="Створити" Command="cmd:DataCommands.New">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/new.png" Width="16" Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Зберегти" Command="cmd:DataCommands.Save">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/save.png" Width="16" Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="Навігація">
+                    <MenuItem Header="На Головну" Click="GoToMainPage_Click"/>
+                    <MenuItem Header="До Історії" Click="GoToHistoryPage_Click"/>
+                </MenuItem>
+            </Menu>
+
+            <ToolBar Name="ToolBar1" Margin="3">
+                <Button Command="cmd:DataCommands.Undo" ToolTip="Скасувати введення (Ctrl+Z)" Margin="5,2,5,2">
+                    <Image Source="/Images/undo.png" Width="24" Height="24" />
+                </Button>
+                <Separator/>
+                <Button Command="cmd:DataCommands.New" ToolTip="Створити нову конвертацію (очистити поля) (Ctrl+N)" Margin="5,2,5,2">
+                    <Image Source="/Images/new.png" Width="24" Height="24" />
+                </Button>
+                <Button Command="cmd:DataCommands.Save" ToolTip="Зберегти поточну конвертацію/зміни (Ctrl+S)" Margin="5,2,5,2">
+                    <Image Source="/Images/save.png" Width="24" Height="24" />
+                </Button>
+            </ToolBar>
+        </StackPanel>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+            <Viewbox Stretch="Uniform" Margin="10">
+                <Grid Width="780" MinHeight="300">
+                    <Border BorderBrush="DarkGray" BorderThickness="1" Padding="20" Margin="10" CornerRadius="3" VerticalAlignment="Center">
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                            <TextBlock x:Name="ConverterTitleTextBlock" Text="Конвертер чисел" FontSize="20" FontWeight="Bold" 
+                                       Margin="0,0,0,20" HorizontalAlignment="Center"/>
+                            <Grid MinWidth="600">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="20"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Арабське число (1-3999):" FontSize="16" Margin="0,0,0,5"/>
+                                    <TextBox x:Name="ArabicTextBox" FontSize="18" Padding="10" 
+                                             TextChanged="ArabicTextBox_TextChanged" MaxLength="4"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Римське число (I-MMMCMXCIX):" FontSize="16" Margin="0,0,0,5"/>
+                                    <TextBox x:Name="RomanTextBox" FontSize="18" Padding="10"
+                                             TextChanged="RomanTextBox_TextChanged" MaxLength="15"/>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Viewbox>
+        </ScrollViewer>
+    </DockPanel>
+</Page>
